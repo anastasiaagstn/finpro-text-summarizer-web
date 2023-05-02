@@ -1,17 +1,26 @@
-const { query } = require("express-validator");
 const utils = require("./utils.js");
 const nlp = require("compromise/one");
 const natural = require("natural");
+const fs = require('fs/promises');
 nlp.extend(require("compromise-sentences"));
 
-module.exports.testApi = function(req, res) {
-  const error = query(req).exists();
-  if (!error.isEmpty()) {
-    console.log("errors ", error);
-  }
+module.exports.testApi = async function(req, res) {
+  console.log("Running test api service");
 
+  // if (!req.files || Object.keys(req.files).length === 0) {
+  //   return res.status(400).send('No files were uploaded.');
+  // }
+
+  // let files = req.files;
+  // let fileContent = files.Test
+  // let text;
+  // await getText(text, fileContent.data);
+  // text = fileContent.toString('utf8');
+  
   let body = utils.getBody(req);
-  let sentencesAll = req.query.sentence;
+  let sentenceAllBody = body.textDocument;
+  
+  let sentencesAll = req.query.textDocument;
 
   // add abbreviations
   let abbrevs = nlp().model.one.abbreviations;
@@ -22,11 +31,11 @@ module.exports.testApi = function(req, res) {
   Object.assign(abbrevs, newAbbrevs);
 
   // tokenize sentences
-  const tokenizedData = nlp(sentencesAll);
+  const tokenizedData = nlp(sentenceAllBody);
   // const tokenizedSentences = tokenizedData.json().map(sentence => {sentence.text});
-  let tokenizedSentences = tokenizedData.splitAfter('@hasSemicolon');
-  tokenizedSentences = tokenizedData.splitAfter('\n');
-  tokenizedSentences = tokenizedSentences.json().map(sentence => sentence.text);
+  let splitSemiColon = tokenizedData.splitAfter('@hasSemicolon');
+  // let newSentence = splitSemiColon.splitAfter('@');
+  let tokenizedSentences = splitSemiColon.json().map(sentence => sentence.text);
 
   const frequencyMatrix = createFrequencyMatrix(tokenizedSentences);
   const tfMatrix = createTfMatrix(frequencyMatrix);
@@ -48,7 +57,7 @@ module.exports.testApi = function(req, res) {
     // arr: arr
   };
 
-  return res.status(200).send(result);
+  return result;
 }
 
 // Calculate the frequency of words in each sentence
@@ -235,4 +244,18 @@ function generateSummary(sentences, sentenceValue, threshold) {
   }
 
   return summary;
+}
+
+async function getText(text, data) {
+  try {
+    fs.readFile(data, (err, resultedData) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      text = resultedData;
+    });
+  } catch (err) {
+    console.log(err);
+  }
 }

@@ -8,7 +8,6 @@ module.exports.objectSumValue = function(obj) {
   return sum;
 }
 
-
 module.exports.getBody = function(data) {
   const request = data;
   return request.body;

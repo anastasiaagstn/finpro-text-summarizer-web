@@ -4,9 +4,11 @@ const port = 3000
 const express = require("express");
 const router = express.Router();
 const path = require("path");
+const Controller = require("./apiController.js");
 
 const app = express();
 const bodyParser = require("body-parser");
+app.use(bodyParser.json({limit: "5mb"}));
 
 
 router.use(function(req, res, next) {
@@ -22,11 +24,8 @@ const corsOptions = {
 
 router.use(cors(corsOptions));
 
-const Services = require("./servicesFunction.js");
+router.post('/test-api', Controller.postData);
 
-router.post('/test-api', Services.testApi);
-
-app.use(bodyParser.json({limit: "5mb"}));
 app.use("/", router);
 
 http.createServer(app).listen(port, () => {
