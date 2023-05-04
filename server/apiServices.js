@@ -234,6 +234,10 @@ function generateSummary(sentences, sentenceValue, threshold) {
   let summary = "";
 
   for (let sentence of sentences) {
+    if (sentences.indexOf(sentence) === 0) {
+      summary += sentence;
+      continue
+    }
     const sentenceKey = sentence.slice(0,15);
     const boolean = sentenceValue.hasOwnProperty(sentenceKey);
 
