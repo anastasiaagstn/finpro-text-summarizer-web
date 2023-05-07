@@ -7,7 +7,7 @@ module.exports.postData = function(req, res) {
     console.log("errors ", error);
   }
 
-  Services.testApi(req).then(result => {
+  Services.summaryService(req).then(result => {
     return res.status(200).send(result);
   })
 }
