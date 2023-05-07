@@ -1,11 +1,13 @@
 const http = require("http");
 const cors = require("cors");
-const port = 3000
 const express = require("express");
+const dotenv = require("dotenv");
+const port = 3000;
 const router = express.Router();
 const path = require("path");
 const Controller = require("./apiController.js");
 
+dotenv.config();
 const app = express();
 const bodyParser = require("body-parser");
 app.use(bodyParser.json({limit: "5mb"}));
