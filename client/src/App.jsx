@@ -1,14 +1,23 @@
+import { useState } from 'react';
 import TextArea from "./components/TextAreaComponent.jsx";
+import { Stack, Typography } from '@mui/material';
 
 function App() {
-  // const [count, setCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(0);
 
   return (
-    <div className="App">
-      <h1>Base React Project</h1>
-      <h2>Extractive Text Summarizer</h2>
-      <TextArea/>
-    </div>
+    <Stack className="App">
+      <Stack my={1}>
+        <Typography variant='h4'>Base React Project</Typography>
+        <Typography variant='h5'>Extractive Text Summarizer</Typography>
+      </Stack>
+      <TextArea setIsLoading={setIsLoading}/>
+      {isLoading ?
+        <Stack>
+          <Typography>Loading...</Typography>
+        </Stack>
+        : null }
+    </Stack>
   )
 }
 

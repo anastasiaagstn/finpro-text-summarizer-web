@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Button, Stack, TextField, Typography } from '@mui/material';
 
-const TextAreaComponent = () => {
+const TextAreaComponent = ({ setIsLoading }) => {
   const [textAreaValue, setTextAreaValue] = useState('');
   const [responseValue, setResponseValue] = useState('');
 
@@ -12,6 +12,8 @@ const TextAreaComponent = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    setResponseValue("");
 
     try {
       const response = await axios.post('http://localhost:3000/test-api', { textDocument: textAreaValue });
@@ -20,11 +22,13 @@ const TextAreaComponent = () => {
     } catch (error) {
       console.error(error);
     }
+
+    setIsLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack display="flex" spacing={2} direction={'row'} paddingBottom={1}>
+      <Stack display="flex" spacing={2} direction={'row'} pb={1}>
         <Stack display="block" direction={'column'}>
           <Typography htmlFor="myTextArea">Type your content:</Typography><br />
           <TextField
@@ -50,13 +54,11 @@ const TextAreaComponent = () => {
           />
         </Stack>
       </Stack>
-      <Stack display="block">
+      <Stack display="block" my={1}>
         <Button type="submit" variant="contained">Submit</Button>
       </Stack>
     </form>
   );
 };
-
-
 
 export default TextAreaComponent;
