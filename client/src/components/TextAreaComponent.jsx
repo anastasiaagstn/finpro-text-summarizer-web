@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Button, Stack, TextField, Typography } from '@mui/material';
 
-const TextAreaComponent = ({ setIsLoading }) => {
+const TextAreaComponent = ({ setIsLoading, setAccuracy }) => {
   const [textAreaValue, setTextAreaValue] = useState('');
   const [responseValue, setResponseValue] = useState('');
 
@@ -19,6 +19,8 @@ const TextAreaComponent = ({ setIsLoading }) => {
       const response = await axios.post('http://localhost:3000/test-api', { textDocument: textAreaValue });
       let data = response.data
       setResponseValue(data.summary);
+      setAccuracy(data.rouge);
+      console.log(data.rouge);
     } catch (error) {
       console.error(error);
     }
