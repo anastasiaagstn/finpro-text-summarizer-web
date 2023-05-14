@@ -2,7 +2,8 @@ const nlp = require("compromise/one");
 const natural = require("natural");
 nlp.extend(require("compromise-sentences"));
 
-module.exports.summarizeText = function(text) {
+module.exports.generateSummary = function(text) {
+  console.log(">> System summarizer");
   // add abbreviations
   let abbrevs = nlp().model.one.abbreviations;
   let newAbbrevs = {
@@ -25,8 +26,7 @@ module.exports.summarizeText = function(text) {
   const scores = scoreSentences(tfIdfMatrix);
   const threshold = findAverageScore(scores);
 
-  const summary = generateSummary(tokenizedSentences, scores, 
-    threshold * 0.6);
+  const summary = generateSummary(tokenizedSentences, scores, threshold);
 
   return summary;
 }

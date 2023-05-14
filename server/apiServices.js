@@ -19,13 +19,14 @@ module.exports.summaryService = async function(req, res) {
     return result;
   }
 
-  const generatedSummary = tfIdfSummarizer.summarizeText(sentenceAllBody);
-  const referenceSummary = await chatGPTSummarizer.generateSummary(sentenceAllBody);
+  const generatedSummary = tfIdfSummarizer.generateSummary(sentenceAllBody);
+  const referenceSummary = await chatGPTSummarizer.fetchReferenceSummary(sentenceAllBody);
 
   const rouge = generateRouge.generateRouge(generatedSummary, referenceSummary);
 
   result = {
     summary: generatedSummary,
+    referenceSummary: referenceSummary,
     rouge: rouge
   };
 

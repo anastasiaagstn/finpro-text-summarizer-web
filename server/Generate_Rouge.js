@@ -4,7 +4,7 @@ const nlp = require("compromise");
 module.exports.generateRouge = function(generatedSummary, referenceSummary) {
   console.log(">> Generate Rouge Score");
   const words_generatedSummary = textIntoArray(generatedSummary);
-  const words_referenceSummary = textIntoArray(referenceSummary);
+  let words_referenceSummary = textIntoArray(referenceSummary);
 
   const generatedLength = words_generatedSummary.length;
   const referenceLength = words_referenceSummary.length;
@@ -12,17 +12,21 @@ module.exports.generateRouge = function(generatedSummary, referenceSummary) {
   let capturedWords = 0;
 
   for (let index = 0; index < generatedLength; index++) {
-    if(words_referenceSummary.includes(words_generatedSummary[index])){
+    let currentWord = words_generatedSummary[index];
+    if(words_referenceSummary.includes(currentWord)){
       capturedWords++;
+      // words_referenceSummary.splice(words_referenceSummary.indexOf(currentWord), 1);
     }
   }
 
   const precision = capturedWords/referenceLength;
   const recall = capturedWords/generatedLength;
+  const f1Score = (2 * precision * recall) / (precision + recall)
 
   return {
-    precision: precision,
-    recall: recall
+    Precision: precision,
+    Recall: recall,
+    F1Score: f1Score
   }
 }
 
