@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Stack, Typography } from '@mui/material';
-import AccuracyComponent from "./components/AccuracyComponent.jsx";
-import TextArea from "./components/TextAreaComponent.jsx";
+import Accuracy from "./components/Accuracy.jsx";
+import TextArea from "./components/TextArea.jsx";
 import "./styles.css";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         <Typography variant='h5'>Extractive Text Summarizer</Typography>
       </Stack>
       <TextArea setIsLoading={setIsLoading} setAccuracy={setAccuracy} />
-      <AccuracyComponent accuracy={accuracy} />
+      <Accuracy accuracy={accuracy} />
       {isLoading ?
         <Stack>
           <Typography>Loading...</Typography>

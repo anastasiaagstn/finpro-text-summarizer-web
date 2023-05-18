@@ -3,17 +3,17 @@ import axios from 'axios';
 import { Button, Stack, TextField, Typography } from '@mui/material';
 
 const TextAreaComponent = ({ setIsLoading, setAccuracy }) => {
-  const [textAreaValue, setTextAreaValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [responseValue, setResponseValue] = useState('');
 
   const handleTextAreaChange = (event) => {
-    setTextAreaValue(event.target.value);
+    setInputValue(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (textAreaValue === "") {
+    if (inputValue === "") {
       return
     }
 
@@ -21,11 +21,10 @@ const TextAreaComponent = ({ setIsLoading, setAccuracy }) => {
     setResponseValue("");
 
     try {
-      const response = await axios.post('http://localhost:3000/test-api', { textDocument: textAreaValue });
+      const response = await axios.post('http://localhost:3000/summarize', { textDocument: inputValue });
       let data = response.data
       setResponseValue(data.summary);
       setAccuracy(data.rouge);
-      console.log(data.rouge);
     } catch (error) {
       console.error(error);
     }
@@ -45,7 +44,7 @@ const TextAreaComponent = ({ setIsLoading, setAccuracy }) => {
             variant="filled"
             multiline
             rows={10}
-            value={textAreaValue}
+            value={inputValue}
             onChange={handleTextAreaChange}
           />
         </Stack>
