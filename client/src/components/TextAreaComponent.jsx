@@ -12,6 +12,11 @@ const TextAreaComponent = ({ setIsLoading, setAccuracy }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (textAreaValue === "") {
+      return
+    }
+
     setIsLoading(true);
     setResponseValue("");
 
@@ -30,13 +35,14 @@ const TextAreaComponent = ({ setIsLoading, setAccuracy }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack display="flex" spacing={2} direction={'row'} pb={1}>
+      <Stack display="flex" spacing={3} direction={'row'} pb={2} width={'100%'}>
         <Stack display="block" direction={'column'}>
-          <Typography htmlFor="myTextArea">Type your content:</Typography><br />
+          <Typography htmlFor="myTextArea" pb={1} className='label'>Type your content:</Typography>
           <TextField
-            sx={{ width: 400 }}
+            sx={{ width: 500 }}
             id="myTextArea"
-            label="Story"
+            placeholder='Type your story'
+            variant="filled"
             multiline
             rows={10}
             value={textAreaValue}
@@ -44,11 +50,12 @@ const TextAreaComponent = ({ setIsLoading, setAccuracy }) => {
           />
         </Stack>
         <Stack display="block" direction={'column'}>
-          <Typography htmlFor="responseTextArea">Response:</Typography><br />
+          <Typography htmlFor="responseTextArea" pb={1} className='label'>Summary:</Typography>
           <TextField
-            sx={{ width: 400 }}
+            sx={{ width: 500 }}
             id="responseTextArea"
-            label="Response"
+            placeholder='Summary will appear here'
+            variant="filled"
             multiline
             rows={10}
             value={responseValue}
@@ -56,7 +63,7 @@ const TextAreaComponent = ({ setIsLoading, setAccuracy }) => {
           />
         </Stack>
       </Stack>
-      <Stack display="block" my={1}>
+      <Stack display="flex" justifyContent="center" alignItems="center" py={1}>
         <Button type="submit" variant="contained">Submit</Button>
       </Stack>
     </form>
