@@ -4,13 +4,11 @@ const express = require("express");
 const dotenv = require("dotenv");
 const port = 3000;
 const router = express.Router();
-const path = require("path");
 const Controller = require("./apiController.js");
 
 dotenv.config();
-const app = express();
-const bodyParser = require("body-parser");
-app.use(bodyParser.json({limit: "5mb"}));
+
+/*** Router Settings ***/
 
 router.use(function(req, res, next) {
   console.log("#endpoint: " + req.method + " " + req.originalUrl);
@@ -24,8 +22,13 @@ const corsOptions = {
 }
 
 router.use(cors(corsOptions));
-
 router.post('/test-api', Controller.postData);
+
+/*** App Settings ***/
+
+const app = express();
+const bodyParser = require("body-parser");
+app.use(bodyParser.json({limit: "5mb"}));
 
 app.use("/", router);
 

@@ -1,4 +1,4 @@
-const nlp = require("compromise/one");
+const nlp = require('compromise');
 const natural = require("natural");
 nlp.extend(require("compromise-sentences"));
 
@@ -26,7 +26,7 @@ module.exports.generateSummary = function(text) {
   const scores = scoreSentences(tfIdfMatrix);
   const threshold = findAverageScore(scores);
 
-  const summary = generateSummary(tokenizedSentences, scores, threshold);
+  const summary = generateSummary(tokenizedSentences, scores, threshold * 0.8);
 
   return summary;
 }
