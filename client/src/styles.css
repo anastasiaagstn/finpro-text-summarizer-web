@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  height: 100vh;
+}
+
+#root{
+  height: 100vh;
+}
+
+.App {
+  height: 100%;
+  font-family: sans-serif;
+  background: color #9c9c9c;;
+  color: color #252d3a;
+}
+
+.label {
+  color: #245991;
+}
