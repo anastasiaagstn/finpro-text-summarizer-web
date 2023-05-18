@@ -22,7 +22,7 @@ const corsOptions = {
 }
 
 router.use(cors(corsOptions));
-router.post('/test-api', Controller.postData);
+router.post('/summarize', Controller.postData);
 
 /*** App Settings ***/
 

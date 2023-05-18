@@ -1,8 +1,5 @@
 const axios = require("axios");
 
-const MAX_RETRIES = 3;
-const INITIAL_BACKOFF_DELAY = 30000; // 30 second
-
 module.exports.fetchReferenceSummary = async function (textToSummarize) {
   console.log(">> OpenAI summarizer");
   const apiUrl = "https://api.openai.com/v1/completions";

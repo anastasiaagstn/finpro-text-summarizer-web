@@ -26,7 +26,7 @@ module.exports.generateSummary = function(text) {
   const scores = scoreSentences(tfIdfMatrix);
   const threshold = findAverageScore(scores);
 
-  const summary = generateSummary(tokenizedSentences, scores, threshold * 0.8);
+  const summary = generateSummary(tokenizedSentences, scores, threshold * 0.85);
 
   return summary;
 }
@@ -34,7 +34,6 @@ module.exports.generateSummary = function(text) {
 
 // Calculate the frequency of words in each sentence
 function createFrequencyMatrix(sentences) {
-  // var wordTokenizer = new natural.WordTokenizer();
   let frequencyMatrix = {};
 
   for (const sentence of sentences) {
@@ -211,9 +210,8 @@ function generateSummary(sentences, sentenceValue, threshold) {
       continue
     }
     const sentenceKey = sentence.slice(0,15);
-    const boolean = sentenceValue.hasOwnProperty(sentenceKey);
 
-    if ( sentenceValue.hasOwnProperty(sentenceKey)
+    if (sentenceValue.hasOwnProperty(sentenceKey)
       && (sentenceValue[sentenceKey] >= threshold)) {
         summary += " " + sentence;
     }
