@@ -1,6 +1,6 @@
 const nlp = require("compromise");
 
-module.exports.generateRouge = function(generatedSummary, referenceSummary) {
+module.exports.generateAccuracy = function(generatedSummary, referenceSummary) {
   console.log(">> Generate Rouge Score");
   const words_generatedSummary = textIntoArray(generatedSummary);
   let words_referenceSummary = textIntoArray(referenceSummary);

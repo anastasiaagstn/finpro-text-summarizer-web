@@ -2,7 +2,7 @@ const utils = require("./utils.js");
 
 const chatGPTSummarizer = require("./Summarizer_OpenAi.js");
 const tfIdfSummarizer = require("./Summarizer_TfIdf.js");
-const generateRouge = require("./Generate_Rouge.js")
+const generateAccuracy = require("./GenerateAccuracy.js")
 
 module.exports.summaryService = async function(req, res) {
   console.log(">> Summary Service");
@@ -22,7 +22,7 @@ module.exports.summaryService = async function(req, res) {
   const generatedSummary = tfIdfSummarizer.generateSummary(sentenceAllBody);
   const referenceSummary = await chatGPTSummarizer.fetchReferenceSummary(sentenceAllBody);
 
-  const rouge = generateRouge.generateRouge(generatedSummary, referenceSummary);
+  const rouge = generateAccuracy.generateAccuracy(generatedSummary, referenceSummary);
 
   result = {
     summary: generatedSummary,
